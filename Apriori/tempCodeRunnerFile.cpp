@@ -1,0 +1,2 @@
+string emp;
+        // in >> emp;

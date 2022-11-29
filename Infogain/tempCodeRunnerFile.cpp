@@ -1,1 +1,1 @@
-infogain_cpp
+file >> line;

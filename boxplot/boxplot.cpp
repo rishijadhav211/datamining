@@ -45,8 +45,13 @@ int main()
         nums.push_back(stoi(word));
     }
 
-    quicksort(nums, 0, nums.size() - 1);
-
+    // quicksort(nums, 0, nums.size() - 1);
+    sort(nums.begin(), nums.end());
+    for (auto i : nums)
+    {
+        cout << i << " ";
+    }
+    cout << nums.size() << endl;
     cout << "Min----------------> " << nums[0] << endl;
     fout << endl;
     fout << "MIN," << nums[0] << endl;

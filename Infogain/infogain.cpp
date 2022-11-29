@@ -17,7 +17,7 @@ int main()
     map<string, int> parent;
     map<string, map<string, int>> child;
 
-    file >> line;
+    // file >> line;
     if (file.is_open())
     {
         int i = 0;
@@ -37,6 +37,7 @@ int main()
             getline(str, five, ',');
             getline(str, six, ',');
 
+            cout << five << endl;
             parent[six]++;
             child[five][six]++;
         }
@@ -52,6 +53,7 @@ int main()
 
             child_entropy_pro += -((pR + nR) / totR) * ((pR / tR) * log2(pR / tR) + (nR / tR) * log2(nR / tR));
         }
+        cout << "parent_entropy : " << parent_entropy << "  child_entropy_pro : " << child_entropy_pro << endl;
         cout << "Info gain : " << parent_entropy - child_entropy_pro << "\n";
     }
     else

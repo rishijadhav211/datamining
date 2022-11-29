@@ -38,14 +38,14 @@ int main()
             {
                 a_count++;
             }
-            if (nums[i][j])
+            if (nums[i + 1][j])
             {
                 b_count++;
             }
         }
 
         float coefficient = (related * 1.0f) / (a_count * b_count);
-
+        // cout << " " << a_count << " " << b_count << " " << related;
         cout << " coefficient is = " << coefficient;
         if (coefficient == 1)
         {
