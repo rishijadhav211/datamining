@@ -8,7 +8,7 @@ vector<set<string>> datatable;
 set<string> products;
 map<string, int> freq;
 
-vector<string> wordsof(string str) // returns the string array of str...
+vector<string> wordsof(string str)
 {
     vector<string> tmpset;
     string tmp = "";
@@ -25,12 +25,14 @@ vector<string> wordsof(string str) // returns the string array of str...
         }
         i++;
     }
+
     if (tmp.size() > 0)
         tmpset.push_back(tmp);
+
     return tmpset;
 }
 
-string combine(vector<string> &arr, int miss) // combines the strings in the array and return the combined string...
+string combine(vector<string> &arr, int miss)
 {
     string str;
     for (int i = 0; i < arr.size(); i++)
@@ -60,12 +62,22 @@ set<string> apriori_gen(set<string> &sets, int k)
             vector<string> v1 = wordsof(*it1);
             vector<string> v2 = wordsof(*it2);
 
+            // cout << "\nVector 1 :";
+            // for(auto s : v1){
+            //     cout << s << " ";
+            // }
+            // cout << "\n";
+
+            // cout << "\nVector 2 :";
+            // for(auto s : v2){
+            //     cout << s << " ";
+            // }
+            // cout << "\n";
+
             bool alleq = true;
             for (int i = 0; i < k - 1 && alleq; i++)
                 if (v1[i] != v2[i])
                     alleq = false;
-            if (!alleq)
-                continue;
 
             v1.push_back(v2[k - 1]);
             if (v1[v1.size() - 1] < v1[v1.size() - 2])
@@ -73,7 +85,7 @@ set<string> apriori_gen(set<string> &sets, int k)
 
             for (int i = 0; i < v1.size() && alleq; i++)
             {
-                string tmp = combine(v1, i); // prune step.....
+                string tmp = combine(v1, i);
                 if (sets.find(tmp) == sets.end())
                     alleq = false;
             }
@@ -87,19 +99,25 @@ set<string> apriori_gen(set<string> &sets, int k)
 
 int main()
 {
-    fin.open("apriori.in");
-    cout << "Frequency % :"; // taking frequency percentage
+    fin.open("freqitem.csv", ios::in);
+
+    if (!fin.is_open())
+    {
+        perror("Error in opening file : ");
+    }
+    cout << "Frequency % :";
     cin >> minfre;
 
     string str;
     while (!fin.eof())
     {
         getline(fin, str);
-        vector<string> arr = wordsof(str); // taking data from file ,
-        set<string> tmpset;                // creating datatable and
+        vector<string> arr = wordsof(str);
+        set<string> tmpset;
         for (int i = 0; i < arr.size(); i++)
-            tmpset.insert(arr[i]); // generating one-itemsets...
+            tmpset.insert(arr[i]);
         datatable.push_back(tmpset);
+
         for (set<string>::iterator it = tmpset.begin(); it != tmpset.end(); it++)
         {
             products.insert(*it);
@@ -111,60 +129,88 @@ int main()
     cout << "No of transactions: " << datatable.size() << endl;
     minfre = minfre * datatable.size() / 100;
     cout << "Min frequency:" << minfre << endl;
-    cout << "frequency Count" << endl;
-    queue<set<string>::iterator> q;
 
+    queue<set<string>::iterator> q;
     for (set<string>::iterator it = products.begin(); it != products.end(); it++)
         if (freq[*it] < minfre)
             q.push(it);
+
     while (q.size() > 0)
-    { // deleting infrequent itemsets..
+    {
         products.erase(*q.front());
         q.pop();
     }
 
-    for (set<string>::iterator it = products.begin(); it != products.end(); it++) // printing one-itemsets
-        cout << *it << " " << freq[*it] << endl;
+    int pass = 1;
+    cout << "\nFrequent " << pass++ << " -item set : \n";
+    for (set<string>::iterator it = products.begin(); it != products.end(); it++)
+        cout << "{" << *it << "} " << freq[*it] << endl;
 
     int i = 2;
     set<string> prev = cloneit(products);
+
     while (i)
     {
-        set<string> cur = apriori_gen(prev, i - 1); // generating candidate sets from previons itemsets...
+        set<string> cur = apriori_gen(prev, i - 1);
 
         if (cur.size() < 1)
+        {
             break;
+        }
+
         for (set<string>::iterator it = cur.begin(); it != cur.end(); it++)
         {
-
             vector<string> arr = wordsof(*it);
-            int tot = 0;
 
+            int tot = 0;
             for (int j = 0; j < datatable.size(); j++)
             {
-                bool pres = true; // calculating candidates frequencies...
+                bool pres = true;
                 for (int k = 0; k < arr.size() && pres; k++)
                     if (datatable[j].find(arr[k]) == datatable[j].end())
                         pres = false;
                 if (pres)
                     tot++;
             }
-
             if (tot >= minfre)
-                freq[*it] += tot; // storing infrequent itemsets.....
+                freq[*it] += tot;
             else
                 q.push(it);
         }
+
         while (q.size() > 0)
         {
-            cur.erase(*q.front()); // deleting infrequent itemsets....
+            cur.erase(*q.front());
             q.pop();
         }
 
+        // cout << "Flag : " << flag << "\n";
+        bool flag = true;
+
         for (set<string>::iterator it = cur.begin(); it != cur.end(); it++)
-            cout << *it << " " << freq[*it] << endl;
+        {
+            vector<string> arr = wordsof(*it);
+
+            if (freq[*it] < minfre)
+                flag = false;
+        }
+
+        if (cur.size() == 0)
+            break;
+
+        cout << "\n\nFrequent " << pass++ << " -item set : \n";
+        for (set<string>::iterator it = cur.begin(); it != cur.end(); it++)
+            cout << "{" << *it << "} " << freq[*it] << endl;
 
         prev = cloneit(cur);
         i++;
     }
+    ofstream fw("ferqitem_op.csv", ios::out);
+
+    for (auto it = prev.begin(); it != prev.end(); it++)
+    {
+        fw << "{" << *it << "}" << endl;
+    }
+
+    return 1;
 }

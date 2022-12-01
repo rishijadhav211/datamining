@@ -1,2 +1,1 @@
-string emp;
-        // in >> emp;
+apriori

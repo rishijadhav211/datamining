@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
+
 float Maximum_Value(vector<float> MinMaxArray, int num_elements)
 {
     int i, max = -32000;
@@ -56,11 +57,21 @@ void norm_1D(float min, float max, float new_min, float new_max, vector<float> M
                             (new_max - new_min)) +
                            new_min;
     }
+    ofstream fout;
+    fout.open("lab1.csv", ios::out | ios::app);
+
     for (i = 0; i < num_elements; i++)
+    {
         printf("Normalized Values are  :%5.2f\n", normalizedVal[i]);
+        fout << "Normalized Values are  : "
+             << normalizedVal[i] << endl;
+    }
 }
 int main(void)
 {
+
+    ofstream fout;
+    fout.open("lab1.csv", ios::out | ios::app);
     ifstream ifile("lab1.csv", ios::in);
     vector<float> MinMaxArray;
     if (!ifile.is_open())
@@ -96,9 +107,12 @@ int main(void)
     float sd = 0.0;
     for (i = 0; i < dummy.size(); i++)
     {
+
         sd += pow(dummy[i] - average, 2);
     }
+    cout << "sd" << sd << endl;
     float std_dev = sqrt(sd / MinMaxArray.size());
+    cout << "std_dev " << std_dev << endl;
     vector<float> newArr = dummy;
     for (i = 0; i < newArr.size(); i++)
     {
@@ -106,6 +120,8 @@ int main(void)
     }
     for (i = 0; i < newArr.size(); i++)
     {
+        fout << "z-score Values are : "
+             << newArr[i] << endl;
         printf("z-score Values are :  %5.2f\n", newArr[i]);
     }
     return (0);

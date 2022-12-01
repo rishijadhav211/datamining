@@ -3,6 +3,8 @@
     "iosfwd": "cpp",
     "ostream": "cpp",
     "iostream": "cpp",
-    "fstream": "cpp"
-  }
+    "fstream": "cpp",
+    "*.tcc": "cpp"
+  },
+  "C_Cpp.errorSquiggles": "Enabled"
 }

@@ -13,10 +13,15 @@ int main()
 {
     string line, word;
     ifstream file("infogain_cpp.csv");
+    ofstream fout;
+    fout.open("outputinfogain.csv", ios::out | ios::app);
     string day, outlook, three, four, five, six;
     map<string, int> parent;
     map<string, map<string, int>> child;
-
+    vector<string> attribute;
+    int clmnum = 1;
+    cout << "Enter column number to check entropy " << endl;
+    cin >> clmnum;
     // file >> line;
     if (file.is_open())
     {
@@ -27,34 +32,78 @@ int main()
             stringstream str(line);
             if (i == 0)
             {
+                while (getline(str, day, ','))
+                {
+                    attribute.push_back(day);
+                }
+
                 i++;
                 continue;
             }
-            getline(str, day, ',');
-            getline(str, outlook, ',');
-            getline(str, three, ',');
-            getline(str, four, ',');
-            getline(str, five, ',');
-            getline(str, six, ',');
+            vector<string> columns;
+            while (getline(str, day, ','))
+            {
+                columns.push_back(day);
+            }
 
-            cout << five << endl;
-            parent[six]++;
-            child[five][six]++;
+            int n = columns.size();
+
+            parent[columns[n - 1]]++;
+            child[columns[clmnum - 1]][columns[n - 1]]++;
         }
-        double posR = parent["Yes"], negR = parent["No"];
-        double totR = posR + negR;
-        double parent_entropy = -((posR / totR) * log2(posR / totR) + (negR / totR) * log2(negR / totR));
+
+        vector<int> ParentResult;
+        for (auto it : parent)
+        {
+            ParentResult.push_back(it.second);
+        }
+
+        // double posR = parent["Yes"], negR = parent["No"];
+        double totR = accumulate(ParentResult.begin(), ParentResult.end(), 0);
+
+        double parent_entropy;
+        for (int i = 0; i < ParentResult.size(); i++)
+        {
+            parent_entropy += -(ParentResult[i] / totR * log2(ParentResult[i] / totR));
+        }
+
+        // double parent_entropy = -((posR / totR) * log2(posR / totR) + (negR / totR) * log2(negR / totR));
         double child_entropy_pro = 0;
+        cout << "----" << endl;
+
         for (auto p : child)
         {
+            bool broke = false;
             string val = p.first;
-            double pR = child[val]["Yes"], nR = child[val]["No"];
-            double tR = pR + nR;
 
-            child_entropy_pro += -((pR + nR) / totR) * ((pR / tR) * log2(pR / tR) + (nR / tR) * log2(nR / tR));
+            double addition = 0;
+            for (auto it : parent)
+            {
+                if (child[val][it.first] == 0)
+                {
+                    broke = true;
+                    break;
+                }
+                addition += child[val][it.first];
+            }
+            if (broke == true)
+                continue;
+
+            double childentro = 0;
+            for (auto it : parent)
+            {
+
+                cout << (child[val][it.first] / addition) * log2(child[val][it.first] / addition) << " + ";
+                childentro += -1 * ((child[val][it.first] / addition) * log2(child[val][it.first] / addition));
+            }
+            cout << endl;
+
+            child_entropy_pro += (addition / totR) * (childentro);
         }
         cout << "parent_entropy : " << parent_entropy << "  child_entropy_pro : " << child_entropy_pro << endl;
-        cout << "Info gain : " << parent_entropy - child_entropy_pro << "\n";
+        cout << "Info gain : " << attribute[clmnum] << " " << parent_entropy - child_entropy_pro << "\n";
+
+        fout << "\n infogain of " << attribute[clmnum] << parent_entropy - child_entropy_pro << endl;
     }
     else
     {

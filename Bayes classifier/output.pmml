@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PMML version="4.2" xmlns="http://www.dmg.org/PMML-4_2">
+  <Header copyright="RJ">
+    <Application name="KNIME" version="4.6.4"/>
+  </Header>
+  <DataDictionary numberOfFields="5">
+    <DataField name="Outlook" optype="categorical" dataType="string">
+      <Value value="Sunny"/>
+      <Value value="Overcast"/>
+      <Value value="Rain"/>
+    </DataField>
+    <DataField name="Temp" optype="categorical" dataType="string">
+      <Value value="Hot"/>
+      <Value value="Mild"/>
+      <Value value="Cool"/>
+    </DataField>
+    <DataField name="Humidity" optype="categorical" dataType="string">
+      <Value value="High"/>
+      <Value value="Normal"/>
+    </DataField>
+    <DataField name="Wind" optype="categorical" dataType="string">
+      <Value value="Weak"/>
+      <Value value="Strong"/>
+    </DataField>
+    <DataField name="PlayGame" optype="categorical" dataType="string">
+      <Value value="No"/>
+      <Value value="Yes"/>
+    </DataField>
+  </DataDictionary>
+  <NaiveBayesModel isScorable="true" modelName="KNIME PMML Naive Bayes model" threshold="1.0E-4" functionName="classification">
+    <MiningSchema>
+      <MiningField name="Outlook" invalidValueTreatment="asIs"/>
+      <MiningField name="Temp" invalidValueTreatment="asIs"/>
+      <MiningField name="Humidity" invalidValueTreatment="asIs"/>
+      <MiningField name="Wind" invalidValueTreatment="asIs"/>
+      <MiningField name="PlayGame" invalidValueTreatment="asIs" usageType="target"/>
+    </MiningSchema>
+    <BayesInputs>
+      <BayesInput fieldName="Outlook">
+        <PairCounts value="Sunny">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="2.0"/>
+            <TargetValueCount value="Yes" count="2.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+        <PairCounts value="Overcast">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="0.0"/>
+            <TargetValueCount value="Yes" count="1.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+        <PairCounts value="Rain">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="2.0"/>
+            <TargetValueCount value="Yes" count="2.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+      </BayesInput>
+      <BayesInput fieldName="Temp">
+        <PairCounts value="Hot">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="2.0"/>
+            <TargetValueCount value="Yes" count="1.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+        <PairCounts value="Mild">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="1.0"/>
+            <TargetValueCount value="Yes" count="3.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+        <PairCounts value="Cool">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="1.0"/>
+            <TargetValueCount value="Yes" count="1.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+      </BayesInput>
+      <BayesInput fieldName="Humidity">
+        <PairCounts value="High">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="3.0"/>
+            <TargetValueCount value="Yes" count="2.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+        <PairCounts value="Normal">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="1.0"/>
+            <TargetValueCount value="Yes" count="3.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+      </BayesInput>
+      <BayesInput fieldName="Wind">
+        <PairCounts value="Weak">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="1.0"/>
+            <TargetValueCount value="Yes" count="4.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+        <PairCounts value="Strong">
+          <TargetValueCounts>
+            <TargetValueCount value="No" count="3.0"/>
+            <TargetValueCount value="Yes" count="1.0"/>
+          </TargetValueCounts>
+        </PairCounts>
+      </BayesInput>
+    </BayesInputs>
+    <BayesOutput fieldName="PlayGame">
+      <TargetValueCounts>
+        <TargetValueCount value="No" count="4.0"/>
+        <TargetValueCount value="Yes" count="5.0"/>
+      </TargetValueCounts>
+    </BayesOutput>
+  </NaiveBayesModel>
+</PMML>
