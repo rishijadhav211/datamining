@@ -96,14 +96,16 @@ int main()
                 cout << (child[val][it.first] / addition) * log2(child[val][it.first] / addition) << " + ";
                 childentro += -1 * ((child[val][it.first] / addition) * log2(child[val][it.first] / addition));
             }
-            cout << endl;
 
+            cout << val << " : " << childentro << endl;
+            cout << endl;
             child_entropy_pro += (addition / totR) * (childentro);
         }
-        cout << "parent_entropy : " << parent_entropy << "  child_entropy_pro : " << child_entropy_pro << endl;
-        cout << "Info gain : " << attribute[clmnum] << " " << parent_entropy - child_entropy_pro << "\n";
 
-        fout << "\n infogain of " << attribute[clmnum] << parent_entropy - child_entropy_pro << endl;
+        cout << "parent_entropy : " << parent_entropy << "  child_entropy_pro : " << child_entropy_pro << endl;
+        cout << "Info gain : " << attribute[clmnum - 1] << " " << parent_entropy - child_entropy_pro << "\n";
+
+        fout << "\n infogain of " << attribute[clmnum - 1] << parent_entropy - child_entropy_pro << endl;
     }
     else
     {

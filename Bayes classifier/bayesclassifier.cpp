@@ -11,6 +11,9 @@
 using namespace std;
 int main()
 {
+
+    ofstream fout;
+    fout.open("output.csv", ios::out | ios::app);
     string line, word;
     ifstream file("infogain_cpp.csv");
     string day, outlook, three, four, five, six;
@@ -59,6 +62,7 @@ int main()
             resultclass.push_back(it.first);
         }
 
+        fout << "Condition given : " << endl;
         vector<double> output(resultclass.size(), 1);
         for (auto it : child)
         {
@@ -73,9 +77,9 @@ int main()
                 cout << "no match\n";
                 goto again;
             }
+            fout << it.first << " : " << input << endl;
             for (int i = 0; i < resultclass.size(); i++)
             {
-
                 cout << child[it.first][input][resultclass[i]] << " / " << parent[resultclass[i]] << endl;
                 double val = child[it.first][input][resultclass[i]] / parent[resultclass[i]];
                 output[i] *= val;
@@ -93,8 +97,10 @@ int main()
         cout << "output---------" << endl;
         for (int i = 0; i < resultclass.size(); i++)
         {
+            fout << resultclass[i] << " " << output[i] << endl;
             cout << resultclass[i] << " " << output[i] << endl;
             cout << "Percentage " << (output[i] / sum) * 100 << endl;
+            fout << "Percentage " << (output[i] / sum) * 100 << endl;
         }
     }
     else

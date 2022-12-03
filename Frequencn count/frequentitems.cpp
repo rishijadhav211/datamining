@@ -101,13 +101,16 @@ int main()
 {
     fin.open("freqitem.csv", ios::in);
 
+    ofstream fout;
+    fout.open("output.csv", ios::out | ios::app);
+
     if (!fin.is_open())
     {
         perror("Error in opening file : ");
     }
     cout << "Frequency % :";
     cin >> minfre;
-
+    fout << "min frequency : " << minfre << endl;
     string str;
     while (!fin.eof())
     {
@@ -142,9 +145,13 @@ int main()
     }
 
     int pass = 1;
-    cout << "\nFrequent " << pass++ << " -item set : \n";
+    cout << "\nFrequent " << pass << " -item set : \n";
+    fout << "\nFrequent " << pass++ << " -item set : \n";
     for (set<string>::iterator it = products.begin(); it != products.end(); it++)
+    {
         cout << "{" << *it << "} " << freq[*it] << endl;
+        fout << "{" << *it << "} " << freq[*it] << endl;
+    }
 
     int i = 2;
     set<string> prev = cloneit(products);
@@ -198,9 +205,13 @@ int main()
         if (cur.size() == 0)
             break;
 
-        cout << "\n\nFrequent " << pass++ << " -item set : \n";
+        fout << "\n\nFrequent " << pass++ << " -item set : \n";
+        cout << "\n\nFrequent " << pass << " -item set : \n";
         for (set<string>::iterator it = cur.begin(); it != cur.end(); it++)
+        {
             cout << "{" << *it << "} " << freq[*it] << endl;
+            fout << "{" << *it << "} " << freq[*it] << endl;
+        }
 
         prev = cloneit(cur);
         i++;

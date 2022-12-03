@@ -122,7 +122,7 @@ int countOccurences(vector<string> v)
     return count;
 }
 
-ofstream fw1("assocationRulesOutput.csv", ios::out);
+ofstream fw1("freqitem_op.csv", ios::out);
 
 void subsets(vector<string> items, vector<string> v1, vector<string> v2, int idx)
 {
@@ -182,7 +182,7 @@ void generateAssociationRules(set<string> freqItems)
 
 int main()
 {
-    fin.open("apriori.csv", ios::in);
+    fin.open("apriori2.csv", ios::in);
 
     if (!fin.is_open())
     {
@@ -291,12 +291,6 @@ int main()
         prev = cloneit(cur);
         i++;
     }
-
-    // ofstream fw("ferquentItemsOutput.csv",ios::out);
-
-    // for(auto it = prev.begin();it!=prev.end();it++){
-    //     fw << "{" << *it << "}" << endl;
-    // }
 
     generateAssociationRules(prev);
 

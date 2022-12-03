@@ -7,7 +7,7 @@ y = [21, 19, 24, 17, 16, 25, 24, 22, 21, 21]
 
 data = list(zip(x, y))
 
-linkage_data = linkage(data, method='single', metric='euclidean')
+linkage_data = linkage('input.csv', method='single', metric='euclidean')
 dendrogram(linkage_data)
 
 plt.show()

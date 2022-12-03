@@ -11,6 +11,10 @@ int main()
 {
     string line, word;
     ifstream file("transactions.csv");
+
+    ofstream fout;
+    fout.open("outputcorrelation.csv", ios::out | ios::app);
+
     string item;
     int count = 0;
     vector<unordered_set<string>> transactions;
@@ -64,13 +68,20 @@ int main()
              << ans << endl;
 
         if (ans > 1)
+        {
             cout << A << " and " << B << " are positively correlated" << endl;
+            fout << A << " and " << B << " are positively correlated" << endl;
+        }
         else if (ans < 1)
         {
             cout << A << " and " << B << " are negatively correlated" << endl;
+            fout << A << " and " << B << " are negatively correlated" << endl;
         }
         else
+        {
             cout << A << " and " << B << " are independent" << endl;
+            fout << A << " and " << B << " are independent" << endl;
+        }
     }
     return 0;
 }

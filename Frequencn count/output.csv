@@ -1,0 +1,88 @@
+min frequency : 20
+
+Frequent 1 -item set : 
+{i1} 5
+{i2} 7
+{i3} 5
+{i4} 2
+{i5} 2
+
+
+Frequent 2 -item set : 
+{i1 i2} 4
+{i1 i3} 3
+{i1 i5} 2
+{i2 i3} 4
+{i2 i4} 2
+{i2 i5} 2
+
+
+Frequent 3 -item set : 
+{i1 i2 i3} 2
+{i1 i2 i5} 2
+min frequency : 20
+
+Frequent 1 -item set : 
+{i1} 5
+{i2} 7
+{i3} 5
+{i4} 2
+{i5} 2
+
+
+Frequent 2 -item set : 
+{i1 i2} 4
+{i1 i3} 3
+{i1 i5} 2
+{i2 i3} 4
+{i2 i4} 2
+{i2 i5} 2
+
+
+Frequent 3 -item set : 
+{i1 i2 i3} 2
+{i1 i2 i5} 2
+min frequency : 20
+
+Frequent 1 -item set : 
+{i1} 5
+{i2} 7
+{i3} 5
+{i4} 2
+{i5} 2
+
+
+Frequent 2 -item set : 
+{i1 i2} 4
+{i1 i3} 3
+{i1 i5} 2
+{i2 i3} 4
+{i2 i4} 2
+{i2 i5} 2
+
+
+Frequent 3 -item set : 
+{i1 i2 i3} 2
+{i1 i2 i5} 2
+min frequency : 20
+
+Frequent 1 -item set : 
+{i1} 5
+{i2} 7
+{i3} 5
+{i4} 2
+{i5} 2
+
+
+Frequent 2 -item set : 
+{i1 i2} 4
+{i1 i3} 3
+{i1 i5} 2
+{i2 i3} 4
+{i2 i4} 2
+{i2 i5} 2
+
+
+Frequent 3 -item set : 
+{i1 i2 i3} 2
+{i1 i2 i5} 2
